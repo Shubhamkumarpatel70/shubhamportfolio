@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-bg-dark text-text-primary font-sans antialiased;
+    background-image: 
+      linear-gradient(rgba(88, 166, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(88, 166, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+  
+  a {
+    @apply no-underline;
+  }
+  
+  button {
+    @apply cursor-pointer outline-none;
+  }
+  
+  input, textarea {
+    @apply outline-none;
+  }
+}
+
+@layer utilities {
+  .glow-blue {
+    box-shadow: 0 0 20px rgba(88, 166, 255, 0.5), 0 0 40px rgba(88, 166, 255, 0.3);
+  }
+  
+  .glow-blue-strong {
+    box-shadow: 0 0 30px rgba(88, 166, 255, 0.8), 0 0 60px rgba(88, 166, 255, 0.5);
+  }
+}
+
