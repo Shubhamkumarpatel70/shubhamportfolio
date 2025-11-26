@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../../config/api';
 
 const AddResume = () => {
   const [resumeData, setResumeData] = useState({
@@ -17,7 +18,7 @@ const AddResume = () => {
   const fetchResume = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/admin/resume', {
+      const response = await axios.get('${API_URL}/api/admin/resume', {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (response.data) {
@@ -71,7 +72,7 @@ const AddResume = () => {
               fileType: file.type || 'application/pdf'
             };
 
-            await axios.post('http://localhost:5000/api/admin/resume', dataToSend, {
+            await axios.post('${API_URL}/api/admin/resume', dataToSend, {
               headers: { Authorization: `Bearer ${token}` }
             });
             setMessage({ type: 'success', text: 'Resume uploaded successfully!' });
@@ -98,7 +99,7 @@ const AddResume = () => {
           fileUrl: resumeData.fileUrl,
           fileName: resumeData.fileName || ''
         };
-        await axios.post('http://localhost:5000/api/admin/resume', dataToSend, {
+        await axios.post('${API_URL}/api/admin/resume', dataToSend, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setMessage({ type: 'success', text: 'Resume URL updated successfully!' });

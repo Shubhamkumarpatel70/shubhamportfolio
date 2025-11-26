@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../../config/api';
 
 const AddProjects = () => {
   const [projects, setProjects] = useState([]);
@@ -23,7 +24,7 @@ const AddProjects = () => {
   const fetchProjects = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/admin/projects', {
+      const response = await axios.get('${API_URL}/api/admin/projects', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProjects(response.data);
@@ -52,12 +53,12 @@ const AddProjects = () => {
       };
 
       if (editingId) {
-        await axios.put(`http://localhost:5000/api/admin/projects/${editingId}`, projectData, {
+        await axios.put(`${API_URL}/api/admin/projects/${editingId}`, projectData, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setMessage({ type: 'success', text: 'Project updated successfully!' });
       } else {
-        await axios.post('http://localhost:5000/api/admin/projects', projectData, {
+        await axios.post('${API_URL}/api/admin/projects', projectData, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setMessage({ type: 'success', text: 'Project added successfully!' });
@@ -91,7 +92,7 @@ const AddProjects = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/admin/projects/${id}`, {
+      await axios.delete(`${API_URL}/api/admin/projects/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage({ type: 'success', text: 'Project deleted successfully!' });

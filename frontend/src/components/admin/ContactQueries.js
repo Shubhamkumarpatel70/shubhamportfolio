@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../../config/api';
 
 const ContactQueries = () => {
   const [queries, setQueries] = useState([]);
@@ -12,7 +13,7 @@ const ContactQueries = () => {
   const fetchQueries = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/admin/contacts', {
+      const response = await axios.get('${API_URL}/api/admin/contacts', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setQueries(response.data);
@@ -28,7 +29,7 @@ const ContactQueries = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/admin/contacts/${id}`, {
+      await axios.delete(`${API_URL}/api/admin/contacts/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchQueries();

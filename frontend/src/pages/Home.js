@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import API_URL from '../config/api';
 
 const Home = () => {
   const [featuredProjects, setFeaturedProjects] = useState([]);
@@ -23,7 +24,7 @@ const Home = () => {
 
   const fetchFeaturedProjects = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/public/projects/featured');
+      const response = await axios.get(`${API_URL}/api/public/projects/featured`);
       setFeaturedProjects(response.data);
     } catch (error) {
       console.error('Error fetching featured projects:', error);
@@ -32,7 +33,7 @@ const Home = () => {
 
   const fetchSkills = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/public/skills');
+      const response = await axios.get(`${API_URL}/api/public/skills`);
       setSkills(response.data);
     } catch (error) {
       console.error('Error fetching skills:', error);
@@ -43,7 +44,7 @@ const Home = () => {
 
   const fetchAboutData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/public/about');
+      const response = await axios.get(`${API_URL}/api/public/about`);
       if (response.data) {
         setAboutData(response.data);
       }

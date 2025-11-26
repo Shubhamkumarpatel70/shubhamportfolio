@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../../config/api';
 
 const AboutManage = () => {
   const [aboutData, setAboutData] = useState({
@@ -23,7 +24,7 @@ const AboutManage = () => {
   const fetchAboutData = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/admin/about', {
+      const response = await axios.get('${API_URL}/api/admin/about', {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (response.data) {
@@ -123,7 +124,7 @@ const AboutManage = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/admin/about', aboutData, {
+      await axios.post('${API_URL}/api/admin/about', aboutData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage({ type: 'success', text: 'About information updated successfully!' });

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../../config/api';
 
 const ManageSkills = () => {
   const [skills, setSkills] = useState([]);
@@ -19,7 +20,7 @@ const ManageSkills = () => {
   const fetchSkills = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/admin/skills', {
+      const response = await axios.get('${API_URL}/api/admin/skills', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSkills(response.data);
@@ -44,12 +45,12 @@ const ManageSkills = () => {
       const token = localStorage.getItem('token');
 
       if (editingId) {
-        await axios.put(`http://localhost:5000/api/admin/skills/${editingId}`, formData, {
+        await axios.put(`${API_URL}/api/admin/skills/${editingId}`, formData, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setMessage({ type: 'success', text: 'Skill updated successfully!' });
       } else {
-        await axios.post('http://localhost:5000/api/admin/skills', formData, {
+        await axios.post('${API_URL}/api/admin/skills', formData, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setMessage({ type: 'success', text: 'Skill added successfully!' });
@@ -79,7 +80,7 @@ const ManageSkills = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/admin/skills/${id}`, {
+      await axios.delete(`${API_URL}/api/admin/skills/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage({ type: 'success', text: 'Skill deleted successfully!' });

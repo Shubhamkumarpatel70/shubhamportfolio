@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../../config/api';
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -12,7 +13,7 @@ const ManageUsers = () => {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/admin/users', {
+      const response = await axios.get('${API_URL}/api/admin/users', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUsers(response.data);
@@ -28,7 +29,7 @@ const ManageUsers = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/admin/users/${id}`, {
+      await axios.delete(`${API_URL}/api/admin/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchUsers();

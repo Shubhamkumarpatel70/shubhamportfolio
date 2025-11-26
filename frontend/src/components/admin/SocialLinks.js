@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../../config/api';
 
 const SocialLinks = () => {
   const [socialLinks, setSocialLinks] = useState({
@@ -20,7 +21,7 @@ const SocialLinks = () => {
   const fetchSocialLinks = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/admin/social', {
+      const response = await axios.get('${API_URL}/api/admin/social', {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (response.data) {
@@ -45,7 +46,7 @@ const SocialLinks = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/admin/social', socialLinks, {
+      await axios.post('${API_URL}/api/admin/social', socialLinks, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage({ type: 'success', text: 'Social links updated successfully!' });

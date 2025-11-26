@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../config/api';
 
 const About = () => {
   const [aboutData, setAboutData] = useState({
@@ -19,7 +20,7 @@ const About = () => {
 
   const fetchAboutData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/public/about');
+      const response = await axios.get(`${API_URL}/api/public/about`);
       if (response.data) {
         setAboutData(response.data);
       }
@@ -32,7 +33,7 @@ const About = () => {
 
   const fetchSocialLinks = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/public/social');
+      const response = await axios.get(`${API_URL}/api/public/social`);
       setSocialLinks(response.data || {});
     } catch (error) {
       console.error('Error fetching social links:', error);

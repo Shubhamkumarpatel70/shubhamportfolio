@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_URL from '../../config/api';
 
 const CoffeePurchases = () => {
   const [purchases, setPurchases] = useState([]);
@@ -18,7 +19,7 @@ const CoffeePurchases = () => {
   const fetchPurchases = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/admin/coffee-purchases', {
+      const response = await axios.get('${API_URL}/api/admin/coffee-purchases', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPurchases(response.data);
@@ -41,7 +42,7 @@ const CoffeePurchases = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        `http://localhost:5000/api/admin/coffee-purchases/${id}/approve`,
+        `${API_URL}/api/admin/coffee-purchases/${id}/approve`,
         { projectLink },
         {
           headers: { Authorization: `Bearer ${token}` }
@@ -70,7 +71,7 @@ const CoffeePurchases = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        `http://localhost:5000/api/admin/coffee-purchases/${id}/reject`,
+        `${API_URL}/api/admin/coffee-purchases/${id}/reject`,
         { rejectionReason },
         {
           headers: { Authorization: `Bearer ${token}` }

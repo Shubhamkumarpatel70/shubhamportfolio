@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_URL from '../config/api';
 
 const Resume = () => {
   const [resume, setResume] = useState(null);
@@ -20,7 +21,7 @@ const Resume = () => {
 
   const fetchResume = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/public/resume');
+      const response = await axios.get(`${API_URL}/api/public/resume`);
       if (response.data && (response.data.fileUrl || response.data.fileData)) {
         setResume(response.data);
       }

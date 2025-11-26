@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_URL from '../config/api';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -47,7 +48,7 @@ const Header = () => {
 
   const fetchAboutData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/public/about');
+      const response = await axios.get(`${API_URL}/api/public/about`);
       if (response.data) {
         if (response.data.profileImage) {
           setProfileImage(response.data.profileImage);

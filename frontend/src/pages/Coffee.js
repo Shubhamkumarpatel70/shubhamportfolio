@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_URL from '../config/api';
 
 const Coffee = () => {
   const location = useLocation();
@@ -42,7 +43,7 @@ const Coffee = () => {
 
   const fetchCoffeeData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/public/coffee');
+      const response = await axios.get('${API_URL}/api/public/coffee');
       if (response.data) {
         setCoffeeData(response.data);
         setSelectedCoffees(response.data.minCoffee || 1);
@@ -56,7 +57,7 @@ const Coffee = () => {
 
   const fetchProjects = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/public/projects');
+      const response = await axios.get('${API_URL}/api/public/projects');
       setProjects(response.data);
       
       // Set selected project from URL params
@@ -75,7 +76,7 @@ const Coffee = () => {
 
   const fetchPaymentData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/public/payment');
+      const response = await axios.get('${API_URL}/api/public/payment');
       if (response.data) {
         setPaymentData(response.data);
       }
@@ -152,7 +153,7 @@ const Coffee = () => {
       const totalAmount = selectedCoffees * coffeeData.coffeePrice;
       
       await axios.post(
-        'http://localhost:5000/api/public/coffee-purchase',
+        '${API_URL}/api/public/coffee-purchase',
         {
           projectId: selectedProject._id,
           numberOfCoffees: selectedCoffees,

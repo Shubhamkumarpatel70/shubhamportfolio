@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import API_URL from '../config/api';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -12,7 +13,7 @@ const Footer = () => {
 
   const fetchSocialLinks = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/public/social');
+      const response = await axios.get(`${API_URL}/api/public/social`);
       setSocialLinks(response.data || {});
     } catch (error) {
       console.error('Error fetching social links:', error);
