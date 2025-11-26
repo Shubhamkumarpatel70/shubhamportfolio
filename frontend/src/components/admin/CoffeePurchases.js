@@ -19,7 +19,7 @@ const CoffeePurchases = () => {
   const fetchPurchases = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('${API_URL}/api/admin/coffee-purchases', {
+      const response = await axios.get(`${API_URL}/api/admin/coffee-purchases`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPurchases(response.data);

@@ -20,7 +20,7 @@ const ManageSkills = () => {
   const fetchSkills = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('${API_URL}/api/admin/skills', {
+      const response = await axios.get(`${API_URL}/api/admin/skills`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSkills(response.data);
@@ -50,7 +50,7 @@ const ManageSkills = () => {
         });
         setMessage({ type: 'success', text: 'Skill updated successfully!' });
       } else {
-        await axios.post('${API_URL}/api/admin/skills', formData, {
+        await axios.post(`${API_URL}/api/admin/skills`, formData, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setMessage({ type: 'success', text: 'Skill added successfully!' });

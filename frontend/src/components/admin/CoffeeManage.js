@@ -18,7 +18,7 @@ const CoffeeManage = () => {
   const fetchCoffeeData = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('${API_URL}/api/admin/coffee', {
+      const response = await axios.get(`${API_URL}/api/admin/coffee`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (response.data) {
@@ -61,7 +61,7 @@ const CoffeeManage = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.post('${API_URL}/api/admin/coffee', coffeeData, {
+      await axios.post(`${API_URL}/api/admin/coffee`, coffeeData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage({ type: 'success', text: 'Coffee settings updated successfully!' });

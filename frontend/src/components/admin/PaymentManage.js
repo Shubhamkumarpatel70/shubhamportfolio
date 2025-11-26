@@ -25,7 +25,7 @@ const PaymentManage = () => {
   const fetchPaymentData = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('${API_URL}/api/admin/payment', {
+      const response = await axios.get(`${API_URL}/api/admin/payment`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (response.data) {
@@ -95,7 +95,7 @@ const PaymentManage = () => {
         qrCode: qrCodePreview || paymentData.qrCode
       };
 
-      await axios.post('${API_URL}/api/admin/payment', dataToSend, {
+      await axios.post(`${API_URL}/api/admin/payment`, dataToSend, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage({ type: 'success', text: 'Payment settings updated successfully!' });

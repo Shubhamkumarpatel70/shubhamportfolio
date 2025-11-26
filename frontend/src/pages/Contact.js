@@ -23,7 +23,7 @@ const Contact = () => {
 
   const fetchAboutData = async () => {
     try {
-      const response = await axios.get('${API_URL}/api/public/about');
+      const response = await axios.get(`${API_URL}/api/public/about`);
       if (response.data) {
         setAboutData(response.data);
       }
@@ -45,7 +45,7 @@ const Contact = () => {
     setStatus({ type: '', message: '' });
 
     try {
-      const response = await axios.post('${API_URL}/api/contact', formData);
+      const response = await axios.post(`${API_URL}/api/contact`, formData);
       setStatus({ type: 'success', message: response.data.message || 'Message sent successfully!' });
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {

@@ -21,7 +21,7 @@ const SocialLinks = () => {
   const fetchSocialLinks = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('${API_URL}/api/admin/social', {
+      const response = await axios.get(`${API_URL}/api/admin/social`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (response.data) {
@@ -46,7 +46,7 @@ const SocialLinks = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.post('${API_URL}/api/admin/social', socialLinks, {
+      await axios.post(`${API_URL}/api/admin/social`, socialLinks, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage({ type: 'success', text: 'Social links updated successfully!' });

@@ -24,7 +24,7 @@ const AddProjects = () => {
   const fetchProjects = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('${API_URL}/api/admin/projects', {
+      const response = await axios.get(`${API_URL}/api/admin/projects`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProjects(response.data);
@@ -58,7 +58,7 @@ const AddProjects = () => {
         });
         setMessage({ type: 'success', text: 'Project updated successfully!' });
       } else {
-        await axios.post('${API_URL}/api/admin/projects', projectData, {
+        await axios.post(`${API_URL}/api/admin/projects`, projectData, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setMessage({ type: 'success', text: 'Project added successfully!' });

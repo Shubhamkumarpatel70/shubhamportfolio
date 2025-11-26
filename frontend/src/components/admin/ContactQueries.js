@@ -13,7 +13,7 @@ const ContactQueries = () => {
   const fetchQueries = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('${API_URL}/api/admin/contacts', {
+      const response = await axios.get(`${API_URL}/api/admin/contacts`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setQueries(response.data);

@@ -43,7 +43,7 @@ const Coffee = () => {
 
   const fetchCoffeeData = async () => {
     try {
-      const response = await axios.get('${API_URL}/api/public/coffee');
+      const response = await axios.get(`${API_URL}/api/public/coffee`);
       if (response.data) {
         setCoffeeData(response.data);
         setSelectedCoffees(response.data.minCoffee || 1);
@@ -57,7 +57,7 @@ const Coffee = () => {
 
   const fetchProjects = async () => {
     try {
-      const response = await axios.get('${API_URL}/api/public/projects');
+      const response = await axios.get(`${API_URL}/api/public/projects`);
       setProjects(response.data);
       
       // Set selected project from URL params
@@ -76,7 +76,7 @@ const Coffee = () => {
 
   const fetchPaymentData = async () => {
     try {
-      const response = await axios.get('${API_URL}/api/public/payment');
+      const response = await axios.get(`${API_URL}/api/public/payment`);
       if (response.data) {
         setPaymentData(response.data);
       }
@@ -153,7 +153,7 @@ const Coffee = () => {
       const totalAmount = selectedCoffees * coffeeData.coffeePrice;
       
       await axios.post(
-        '${API_URL}/api/public/coffee-purchase',
+        `${API_URL}/api/public/coffee-purchase`,
         {
           projectId: selectedProject._id,
           numberOfCoffees: selectedCoffees,
