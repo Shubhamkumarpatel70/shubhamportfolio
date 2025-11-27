@@ -98,7 +98,7 @@ const About = () => {
           {/* Connect with Us Section */}
           <div className="max-w-4xl mx-auto mb-20">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-text-primary">Connect with Us</h2>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
               {socialPlatforms.map(platform => {
                 if (socialLinks[platform.key]) {
                   return (
@@ -107,10 +107,10 @@ const About = () => {
                       href={socialLinks[platform.key]}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-6 py-3 bg-card-bg/50 backdrop-blur-sm border border-primary/20 rounded-lg hover:border-primary/50 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/20 transition-all flex items-center gap-2"
+                      className="px-4 sm:px-6 py-3 bg-card-bg/50 backdrop-blur-sm border border-primary/20 rounded-lg hover:border-primary/50 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/20 transition-all flex items-center justify-center gap-2"
                     >
-                      <span className="text-2xl">{platform.icon}</span>
-                      <span className="text-text-primary font-medium">{platform.label}</span>
+                      <span className="text-xl sm:text-2xl">{platform.icon}</span>
+                      <span className="text-text-primary font-medium text-sm sm:text-base">{platform.label}</span>
                     </a>
                   );
                 }

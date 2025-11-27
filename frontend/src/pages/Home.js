@@ -125,10 +125,11 @@ const Home = () => {
             </div>
 
             {/* Name and Title */}
-            <h1 className="text-5xl md:text-7xl font-bold mb-4 text-text-primary">
-              Hi, I'm <span className="text-primary">{aboutData.name || 'Shubham Kumar'}</span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 text-text-primary leading-tight px-4">
+              <span className="block sm:inline">Hi, I'm</span>{' '}
+              <span className="text-primary block sm:inline mt-1 sm:mt-0">{aboutData.name || 'Shubham Kumar'}</span>
             </h1>
-            <p className="text-2xl md:text-3xl mb-6 text-primary font-medium">{aboutData.title || 'Full Stack MERN Developer'}</p>
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-6 text-primary font-medium px-4">{aboutData.title || 'Full Stack MERN Developer'}</p>
             <p className="text-lg md:text-xl mb-10 text-text-primary/80 max-w-2xl leading-relaxed">
               {aboutData.description || "I create beautiful and functional web applications using modern technologies. Passionate about clean code and user experience."}
             </p>
