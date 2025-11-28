@@ -34,7 +34,59 @@ const aboutSchema = new mongoose.Schema({
   profileImage: {
     type: String,
     trim: true
-  }
+  },
+  experience: [{
+    company: {
+      type: String,
+      trim: true
+    },
+    position: {
+      type: String,
+      trim: true
+    },
+    startDate: {
+      type: String,
+      trim: true
+    },
+    endDate: {
+      type: String,
+      trim: true
+    },
+    description: {
+      type: String,
+      trim: true
+    },
+    current: {
+      type: Boolean,
+      default: false
+    }
+  }],
+  education: [{
+    institution: {
+      type: String,
+      trim: true
+    },
+    degree: {
+      type: String,
+      trim: true
+    },
+    field: {
+      type: String,
+      trim: true
+    },
+    startDate: {
+      type: String,
+      trim: true
+    },
+    endDate: {
+      type: String,
+      trim: true
+    },
+    description: {
+      type: String,
+      trim: true
+    }
+  }]
 }, {
   timestamps: true
 });

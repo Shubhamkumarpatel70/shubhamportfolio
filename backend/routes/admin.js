@@ -126,7 +126,28 @@ router.post('/about', auth, async (req, res) => {
   try {
     let about = await About.findOne();
     if (about) {
-      Object.assign(about, req.body);
+      // Update all fields
+      about.name = req.body.name || about.name;
+      about.title = req.body.title || about.title;
+      about.description = req.body.description !== undefined ? req.body.description : about.description;
+      about.bio = req.body.bio !== undefined ? req.body.bio : about.bio;
+      about.email = req.body.email !== undefined ? req.body.email : about.email;
+      about.phone = req.body.phone !== undefined ? req.body.phone : about.phone;
+      about.location = req.body.location !== undefined ? req.body.location : about.location;
+      about.profileImage = req.body.profileImage !== undefined ? req.body.profileImage : about.profileImage;
+      
+      // Explicitly set arrays to ensure they're saved (even if empty)
+      if (req.body.experience !== undefined) {
+        about.experience = Array.isArray(req.body.experience) ? req.body.experience : [];
+      }
+      if (req.body.education !== undefined) {
+        about.education = Array.isArray(req.body.education) ? req.body.education : [];
+      }
+      
+      // Mark arrays as modified to ensure Mongoose saves them
+      about.markModified('experience');
+      about.markModified('education');
+      
       await about.save();
     } else {
       about = new About(req.body);

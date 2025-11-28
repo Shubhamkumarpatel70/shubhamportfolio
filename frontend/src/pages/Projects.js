@@ -45,7 +45,11 @@ const Projects = () => {
               {projects.map(project => (
                 <div key={project._id} className="bg-card-bg/50 backdrop-blur-sm border border-primary/20 rounded-2xl overflow-hidden hover:-translate-y-2 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20 transition-all">
                   <div className="bg-gradient-to-br from-primary/30 to-primary/10 p-12 text-center border-b border-primary/20">
-                    <div className="text-6xl">{project.image}</div>
+                    {project.image && project.image.startsWith('data:image') ? (
+                      <img src={project.image} alt={project.title} className="w-24 h-24 mx-auto object-contain" />
+                    ) : (
+                      <div className="text-6xl">{project.image || '💼'}</div>
+                    )}
                   </div>
                   <div className="p-6">
                     <h3 className="text-2xl font-semibold mb-3 text-text-primary">

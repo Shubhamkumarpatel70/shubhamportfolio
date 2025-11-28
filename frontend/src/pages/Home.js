@@ -94,7 +94,16 @@ const Home = () => {
                               transformOrigin: 'center'
                             }}
                           >
-                            <div className="text-xl md:text-2xl" style={{ transform: 'rotate(0deg)' }}>{skill.icon}</div>
+                            {skill.icon && skill.icon.startsWith('data:image') ? (
+                              <img 
+                                src={skill.icon} 
+                                alt={skill.name} 
+                                className="w-8 h-8 md:w-10 md:h-10 object-contain"
+                                style={{ transform: 'rotate(0deg)' }}
+                              />
+                            ) : (
+                              <div className="text-xl md:text-2xl" style={{ transform: 'rotate(0deg)' }}>{skill.icon || '💼'}</div>
+                            )}
                             <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-card-bg border border-primary/20 rounded-lg text-xs text-text-primary opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20">
                               {skill.name}
                             </div>
@@ -163,7 +172,11 @@ const Home = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {skills.map(skill => (
                 <div key={skill._id} className="bg-card-bg/50 backdrop-blur-sm border border-primary/20 p-8 rounded-2xl text-center hover:-translate-y-2 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20 transition-all">
-                  <div className="text-5xl mb-4">{skill.icon}</div>
+                  {skill.icon && skill.icon.startsWith('data:image') ? (
+                    <img src={skill.icon} alt={skill.name} className="w-16 h-16 mx-auto mb-4 object-contain" />
+                  ) : (
+                    <div className="text-5xl mb-4">{skill.icon || '💼'}</div>
+                  )}
                   <h3 className="text-xl font-semibold mb-2 text-text-primary">{skill.name}</h3>
                   <p className="text-text-primary/70">{skill.description}</p>
                 </div>
@@ -189,7 +202,11 @@ const Home = () => {
                 {featuredProjects.map(project => (
                   <div key={project._id} className="bg-card-bg/50 backdrop-blur-sm border border-primary/20 rounded-2xl overflow-hidden hover:-translate-y-2 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20 transition-all">
                     <div className="bg-gradient-to-br from-primary/30 to-primary/10 p-12 text-center border-b border-primary/20">
-                      <div className="text-6xl">{project.image}</div>
+                      {project.image && project.image.startsWith('data:image') ? (
+                        <img src={project.image} alt={project.title} className="w-24 h-24 mx-auto object-contain" />
+                      ) : (
+                        <div className="text-6xl">{project.image || '💼'}</div>
+                      )}
                     </div>
                     <div className="p-6">
                       <h3 className="text-2xl font-semibold mb-3 text-text-primary">{project.title}</h3>

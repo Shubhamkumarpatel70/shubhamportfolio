@@ -8,11 +8,12 @@ const AddProjects = () => {
     title: '',
     description: '',
     tech: '',
-    image: '💼',
+    image: '',
     link: '',
     github: '',
     featured: false
   });
+  const [imagePreview, setImagePreview] = useState(null);
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
@@ -40,6 +41,63 @@ const AddProjects = () => {
     });
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        setMessage({ type: 'error', text: 'Image size should be less than 5MB' });
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result;
+        
+        // Compress image to reduce payload size
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 400;
+          const MAX_HEIGHT = 400;
+          let width = img.width;
+          let height = img.height;
+
+          // Calculate new dimensions
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Convert to base64 with compression
+          const compressedBase64 = canvas.toDataURL('image/jpeg', 0.8);
+          
+          setFormData({ ...formData, image: compressedBase64 });
+          setImagePreview(compressedBase64);
+          setMessage({ type: '', text: '' });
+        };
+        img.src = base64String;
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeImage = () => {
+    setFormData({ ...formData, image: '' });
+    setImagePreview(null);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -64,7 +122,8 @@ const AddProjects = () => {
         setMessage({ type: 'success', text: 'Project added successfully!' });
       }
 
-      setFormData({ title: '', description: '', tech: '', image: '💼', link: '', github: '', featured: false });
+      setFormData({ title: '', description: '', tech: '', image: '', link: '', github: '', featured: false });
+      setImagePreview(null);
       setEditingId(null);
       fetchProjects();
     } catch (error) {
@@ -79,11 +138,12 @@ const AddProjects = () => {
       title: project.title,
       description: project.description,
       tech: project.tech.join(', '),
-      image: project.image,
+      image: project.image || '',
       link: project.link || '',
       github: project.github || '',
       featured: project.featured || false
     });
+    setImagePreview(project.image || null);
     setEditingId(project._id);
   };
 
@@ -130,15 +190,40 @@ const AddProjects = () => {
             />
           </div>
           <div>
-            <label className="block font-medium mb-2 text-text-primary">Icon/Emoji</label>
-            <input
-              type="text"
-              name="image"
-              value={formData.image}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-3 bg-bg-dark border-2 border-primary/20 rounded-lg text-text-primary placeholder-text-primary/50 focus:border-primary focus:outline-none"
-            />
+            <label className="block font-medium mb-2 text-text-primary">Project Icon/Image</label>
+            <div className="space-y-2">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+                id="project-image-upload"
+              />
+              <label
+                htmlFor="project-image-upload"
+                className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-bg-dark border-2 border-primary/20 rounded-lg text-text-primary cursor-pointer hover:border-primary transition-all"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+                <span>Upload Icon/Image</span>
+              </label>
+              {imagePreview && (
+                <div className="relative">
+                  <img src={imagePreview} alt="Preview" className="w-20 h-20 object-cover rounded-lg border-2 border-primary/20" />
+                  <button
+                    type="button"
+                    onClick={removeImage}
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600"
+                  >
+                    ×
+                  </button>
+                </div>
+              )}
+              {!imagePreview && formData.image && (
+                <div className="text-4xl">{formData.image}</div>
+              )}
+            </div>
           </div>
         </div>
 
@@ -216,7 +301,8 @@ const AddProjects = () => {
             type="button"
             onClick={() => {
               setEditingId(null);
-              setFormData({ title: '', description: '', tech: '', image: '💼', link: '', github: '' });
+              setFormData({ title: '', description: '', tech: '', image: '', link: '', github: '', featured: false });
+              setImagePreview(null);
             }}
             className="ml-4 px-6 py-3 border-2 border-primary text-primary rounded-lg font-semibold hover:bg-primary/10 transition-all"
           >
@@ -231,7 +317,13 @@ const AddProjects = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {projects.map(project => (
             <div key={project._id} className="bg-bg-dark border border-primary/20 rounded-lg p-4">
-              <div className="text-4xl mb-2">{project.image}</div>
+              <div className="mb-2">
+                {project.image && project.image.startsWith('data:image') ? (
+                  <img src={project.image} alt={project.title} className="w-16 h-16 object-cover rounded-lg" />
+                ) : (
+                  <div className="text-4xl">{project.image || '💼'}</div>
+                )}
+              </div>
               <h4 className="text-lg font-semibold text-text-primary mb-2">
                 {project.title}
                 {project.featured && (

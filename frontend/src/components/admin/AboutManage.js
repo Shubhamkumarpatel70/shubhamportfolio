@@ -11,7 +11,9 @@ const AboutManage = () => {
     email: '',
     phone: '',
     location: '',
-    profileImage: ''
+    profileImage: '',
+    experience: [],
+    education: []
   });
   const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -37,7 +39,9 @@ const AboutManage = () => {
           email: response.data.email || '',
           phone: response.data.phone || '',
           location: response.data.location || '',
-          profileImage: response.data.profileImage || ''
+          profileImage: response.data.profileImage || '',
+          experience: response.data.experience || [],
+          education: response.data.education || []
         });
         if (response.data.profileImage) {
           setImagePreview(response.data.profileImage);
@@ -260,6 +264,266 @@ const AboutManage = () => {
               className="w-full px-4 py-3 bg-bg-dark border-2 border-primary/20 rounded-lg text-text-primary placeholder-text-primary/50 focus:border-primary focus:outline-none"
             />
           </div>
+        </div>
+
+        {/* Experience Section */}
+        <div className="border-t border-primary/20 pt-6 mt-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xl font-bold text-text-primary">Experience</h3>
+            <button
+              type="button"
+              onClick={() => {
+                setAboutData({
+                  ...aboutData,
+                  experience: [...(aboutData.experience || []), {
+                    company: '',
+                    position: '',
+                    startDate: '',
+                    endDate: '',
+                    description: '',
+                    current: false
+                  }]
+                });
+              }}
+              className="px-4 py-2 bg-primary text-white rounded-lg text-sm hover:bg-blue-500 transition-all"
+            >
+              + Add Experience
+            </button>
+          </div>
+          {aboutData.experience && aboutData.experience.map((exp, index) => (
+            <div key={index} className="bg-bg-dark/50 border border-primary/20 rounded-lg p-4 mb-4">
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="text-lg font-semibold text-text-primary">Experience #{index + 1}</h4>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newExp = [...aboutData.experience];
+                    newExp.splice(index, 1);
+                    setAboutData({ ...aboutData, experience: newExp });
+                  }}
+                  className="px-3 py-1 bg-accent text-white rounded text-sm hover:bg-orange-500 transition-all"
+                >
+                  Remove
+                </button>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-medium mb-2 text-text-primary">Company</label>
+                  <input
+                    type="text"
+                    value={exp.company || ''}
+                    onChange={(e) => {
+                      const newExp = [...aboutData.experience];
+                      newExp[index].company = e.target.value;
+                      setAboutData({ ...aboutData, experience: newExp });
+                    }}
+                    className="w-full px-4 py-3 bg-bg-dark border-2 border-primary/20 rounded-lg text-text-primary placeholder-text-primary/50 focus:border-primary focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block font-medium mb-2 text-text-primary">Position</label>
+                  <input
+                    type="text"
+                    value={exp.position || ''}
+                    onChange={(e) => {
+                      const newExp = [...aboutData.experience];
+                      newExp[index].position = e.target.value;
+                      setAboutData({ ...aboutData, experience: newExp });
+                    }}
+                    className="w-full px-4 py-3 bg-bg-dark border-2 border-primary/20 rounded-lg text-text-primary placeholder-text-primary/50 focus:border-primary focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block font-medium mb-2 text-text-primary">Start Date</label>
+                  <input
+                    type="text"
+                    value={exp.startDate || ''}
+                    onChange={(e) => {
+                      const newExp = [...aboutData.experience];
+                      newExp[index].startDate = e.target.value;
+                      setAboutData({ ...aboutData, experience: newExp });
+                    }}
+                    placeholder="e.g., Jan 2020"
+                    className="w-full px-4 py-3 bg-bg-dark border-2 border-primary/20 rounded-lg text-text-primary placeholder-text-primary/50 focus:border-primary focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block font-medium mb-2 text-text-primary">End Date</label>
+                  <input
+                    type="text"
+                    value={exp.endDate || ''}
+                    onChange={(e) => {
+                      const newExp = [...aboutData.experience];
+                      newExp[index].endDate = e.target.value;
+                      setAboutData({ ...aboutData, experience: newExp });
+                    }}
+                    placeholder="e.g., Dec 2022 or Present"
+                    disabled={exp.current}
+                    className="w-full px-4 py-3 bg-bg-dark border-2 border-primary/20 rounded-lg text-text-primary placeholder-text-primary/50 focus:border-primary focus:outline-none disabled:opacity-50"
+                  />
+                </div>
+              </div>
+              <div className="mt-4">
+                <label className="flex items-center gap-2 mb-2">
+                  <input
+                    type="checkbox"
+                    checked={exp.current || false}
+                    onChange={(e) => {
+                      const newExp = [...aboutData.experience];
+                      newExp[index].current = e.target.checked;
+                      if (e.target.checked) {
+                        newExp[index].endDate = 'Present';
+                      }
+                      setAboutData({ ...aboutData, experience: newExp });
+                    }}
+                    className="w-5 h-5 text-primary bg-bg-dark border-primary/20 rounded focus:ring-primary"
+                  />
+                  <span className="text-text-primary">Current Position</span>
+                </label>
+              </div>
+              <div className="mt-4">
+                <label className="block font-medium mb-2 text-text-primary">Description</label>
+                <textarea
+                  value={exp.description || ''}
+                  onChange={(e) => {
+                    const newExp = [...aboutData.experience];
+                    newExp[index].description = e.target.value;
+                    setAboutData({ ...aboutData, experience: newExp });
+                  }}
+                  rows="3"
+                  className="w-full px-4 py-3 bg-bg-dark border-2 border-primary/20 rounded-lg text-text-primary placeholder-text-primary/50 focus:border-primary focus:outline-none"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Education Section */}
+        <div className="border-t border-primary/20 pt-6 mt-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xl font-bold text-text-primary">Education</h3>
+            <button
+              type="button"
+              onClick={() => {
+                setAboutData({
+                  ...aboutData,
+                  education: [...(aboutData.education || []), {
+                    institution: '',
+                    degree: '',
+                    field: '',
+                    startDate: '',
+                    endDate: '',
+                    description: ''
+                  }]
+                });
+              }}
+              className="px-4 py-2 bg-primary text-white rounded-lg text-sm hover:bg-blue-500 transition-all"
+            >
+              + Add Education
+            </button>
+          </div>
+          {aboutData.education && aboutData.education.map((edu, index) => (
+            <div key={index} className="bg-bg-dark/50 border border-primary/20 rounded-lg p-4 mb-4">
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="text-lg font-semibold text-text-primary">Education #{index + 1}</h4>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newEdu = [...aboutData.education];
+                    newEdu.splice(index, 1);
+                    setAboutData({ ...aboutData, education: newEdu });
+                  }}
+                  className="px-3 py-1 bg-accent text-white rounded text-sm hover:bg-orange-500 transition-all"
+                >
+                  Remove
+                </button>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-medium mb-2 text-text-primary">Institution</label>
+                  <input
+                    type="text"
+                    value={edu.institution || ''}
+                    onChange={(e) => {
+                      const newEdu = [...aboutData.education];
+                      newEdu[index].institution = e.target.value;
+                      setAboutData({ ...aboutData, education: newEdu });
+                    }}
+                    className="w-full px-4 py-3 bg-bg-dark border-2 border-primary/20 rounded-lg text-text-primary placeholder-text-primary/50 focus:border-primary focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block font-medium mb-2 text-text-primary">Degree</label>
+                  <input
+                    type="text"
+                    value={edu.degree || ''}
+                    onChange={(e) => {
+                      const newEdu = [...aboutData.education];
+                      newEdu[index].degree = e.target.value;
+                      setAboutData({ ...aboutData, education: newEdu });
+                    }}
+                    placeholder="e.g., Bachelor's, Master's"
+                    className="w-full px-4 py-3 bg-bg-dark border-2 border-primary/20 rounded-lg text-text-primary placeholder-text-primary/50 focus:border-primary focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block font-medium mb-2 text-text-primary">Field of Study</label>
+                  <input
+                    type="text"
+                    value={edu.field || ''}
+                    onChange={(e) => {
+                      const newEdu = [...aboutData.education];
+                      newEdu[index].field = e.target.value;
+                      setAboutData({ ...aboutData, education: newEdu });
+                    }}
+                    placeholder="e.g., Computer Science"
+                    className="w-full px-4 py-3 bg-bg-dark border-2 border-primary/20 rounded-lg text-text-primary placeholder-text-primary/50 focus:border-primary focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block font-medium mb-2 text-text-primary">Start Date</label>
+                  <input
+                    type="text"
+                    value={edu.startDate || ''}
+                    onChange={(e) => {
+                      const newEdu = [...aboutData.education];
+                      newEdu[index].startDate = e.target.value;
+                      setAboutData({ ...aboutData, education: newEdu });
+                    }}
+                    placeholder="e.g., 2018"
+                    className="w-full px-4 py-3 bg-bg-dark border-2 border-primary/20 rounded-lg text-text-primary placeholder-text-primary/50 focus:border-primary focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block font-medium mb-2 text-text-primary">End Date</label>
+                  <input
+                    type="text"
+                    value={edu.endDate || ''}
+                    onChange={(e) => {
+                      const newEdu = [...aboutData.education];
+                      newEdu[index].endDate = e.target.value;
+                      setAboutData({ ...aboutData, education: newEdu });
+                    }}
+                    placeholder="e.g., 2022 or Present"
+                    className="w-full px-4 py-3 bg-bg-dark border-2 border-primary/20 rounded-lg text-text-primary placeholder-text-primary/50 focus:border-primary focus:outline-none"
+                  />
+                </div>
+              </div>
+              <div className="mt-4">
+                <label className="block font-medium mb-2 text-text-primary">Description</label>
+                <textarea
+                  value={edu.description || ''}
+                  onChange={(e) => {
+                    const newEdu = [...aboutData.education];
+                    newEdu[index].description = e.target.value;
+                    setAboutData({ ...aboutData, education: newEdu });
+                  }}
+                  rows="3"
+                  className="w-full px-4 py-3 bg-bg-dark border-2 border-primary/20 rounded-lg text-text-primary placeholder-text-primary/50 focus:border-primary focus:outline-none"
+                />
+              </div>
+            </div>
+          ))}
         </div>
 
         <button

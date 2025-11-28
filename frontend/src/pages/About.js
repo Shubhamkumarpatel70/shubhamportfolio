@@ -119,39 +119,69 @@ const About = () => {
             </div>
           </div>
 
-          {/* Experience Timeline */}
+          {/* Experience & Education Timeline */}
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-text-primary">Experience & Education</h2>
-            <div className="relative pl-8">
-              <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-primary"></div>
-              
-              <div className="relative mb-12 pl-8">
-                <div className="absolute -left-11 top-0 w-5 h-5 rounded-full bg-primary border-4 border-bg-dark shadow-lg glow-blue"></div>
-                <div className="font-bold text-primary mb-2 text-lg">2023 - Present</div>
-                <div>
-                  <h3 className="text-2xl font-semibold mb-2 text-text-primary">Senior Full Stack Developer</h3>
-                  <p className="text-text-primary/70 leading-relaxed">Leading development of MERN stack applications</p>
+            
+            {/* Experience Section */}
+            {aboutData.experience && aboutData.experience.length > 0 && (
+              <div className="mb-16">
+                <h3 className="text-2xl font-bold mb-8 text-text-primary text-center">Experience</h3>
+                <div className="relative pl-8">
+                  <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-primary"></div>
+                  {aboutData.experience.map((exp, index) => (
+                    <div key={index} className="relative mb-12 pl-8">
+                      <div className="absolute -left-11 top-0 w-5 h-5 rounded-full bg-primary border-4 border-bg-dark shadow-lg"></div>
+                      <div className="font-bold text-primary mb-2 text-lg">
+                        {exp.startDate} - {exp.current ? 'Present' : exp.endDate}
+                      </div>
+                      <div>
+                        <h4 className="text-2xl font-semibold mb-1 text-text-primary">{exp.position}</h4>
+                        <p className="text-xl text-primary/80 mb-2">{exp.company}</p>
+                        {exp.description && (
+                          <p className="text-text-primary/70 leading-relaxed">{exp.description}</p>
+                        )}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
+            )}
 
-              <div className="relative mb-12 pl-8">
-                <div className="absolute -left-11 top-0 w-5 h-5 rounded-full bg-accent border-4 border-bg-dark shadow-lg"></div>
-                <div className="font-bold text-accent mb-2 text-lg">2021 - 2023</div>
-                <div>
-                  <h3 className="text-2xl font-semibold mb-2 text-text-primary">Full Stack Developer</h3>
-                  <p className="text-text-primary/70 leading-relaxed">Developed and maintained multiple web applications</p>
+            {/* Education Section */}
+            {aboutData.education && aboutData.education.length > 0 && (
+              <div>
+                <h3 className="text-2xl font-bold mb-8 text-text-primary text-center">Education</h3>
+                <div className="relative pl-8">
+                  <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-accent"></div>
+                  {aboutData.education.map((edu, index) => (
+                    <div key={index} className="relative mb-12 pl-8">
+                      <div className="absolute -left-11 top-0 w-5 h-5 rounded-full bg-accent border-4 border-bg-dark shadow-lg"></div>
+                      <div className="font-bold text-accent mb-2 text-lg">
+                        {edu.startDate} - {edu.endDate || 'Present'}
+                      </div>
+                      <div>
+                        <h4 className="text-2xl font-semibold mb-1 text-text-primary">
+                          {edu.degree} {edu.field && `in ${edu.field}`}
+                        </h4>
+                        <p className="text-xl text-accent/80 mb-2">{edu.institution}</p>
+                        {edu.description && (
+                          <p className="text-text-primary/70 leading-relaxed">{edu.description}</p>
+                        )}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
+            )}
 
-              <div className="relative mb-12 pl-8">
-                <div className="absolute -left-11 top-0 w-5 h-5 rounded-full bg-primary border-4 border-bg-dark shadow-lg glow-blue"></div>
-                <div className="font-bold text-primary mb-2 text-lg">2019 - 2021</div>
-                <div>
-                  <h3 className="text-2xl font-semibold mb-2 text-text-primary">Frontend Developer</h3>
-                  <p className="text-text-primary/70 leading-relaxed">Built responsive and interactive user interfaces</p>
-                </div>
+            {/* Show message if no data */}
+            {(!aboutData.experience || aboutData.experience.length === 0) && 
+             (!aboutData.education || aboutData.education.length === 0) && (
+              <div className="text-center text-text-primary/70 py-8">
+                <p>Experience and Education information will be displayed here once added.</p>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </section>
